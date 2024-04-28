@@ -37,8 +37,6 @@ import redis.clients.jedis.commands.JedisCommands;
 import redis.clients.jedis.Protocol;
 import redis.clients.jedis.DefaultJedisClientConfig.Builder;
 
-import java.io.Closeable;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.HashSet;
@@ -107,8 +105,8 @@ public class RedisClient extends DB {
 
   public void cleanup() throws DBException {
     try {
-      ((Closeable) jedis).close();
-    } catch (IOException e) {
+      ((AutoCloseable) jedis).close();
+    } catch (Exception e) {
       throw new DBException("Closing connection failed.");
     }
   }
